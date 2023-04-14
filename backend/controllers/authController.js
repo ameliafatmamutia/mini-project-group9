@@ -38,7 +38,7 @@ module.exports = {
             let payload = { id: isUsernameExist[0].id_users, isVerified: isUsernameExist[0].isVerified }
             const token = jwt.sign(payload, 'amel', { expiresIn: '1h' })
 
-            return res.status(200).send({ token, message: "Login success"})
+            return res.status(200).send({ token, message: "Login berhasil"})
 
 
         } catch (error) {
