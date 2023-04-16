@@ -21,9 +21,11 @@ const Register = () => {
 
     try {
       const response = await Axios.post("http://localhost:8000/auth", formData);
-      console.log(response.data); // Handle response data as needed
+      console.log(response.data);
+      alert("Register success");
     } catch (error) {
       console.error("Error registering:", error);
+      alert("Register fail. Username has been used");
     }
   };
 
