@@ -1,0 +1,12 @@
+.my-form-control {
+    width: 100%; 
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+  
+  
