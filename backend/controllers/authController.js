@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 module.exports = {
     register: async(request, response) => {
 
-        const {username, email, password, phone_number, store_name} = request.body
+        const {username, email, password, phone_number} = request.body
 
         let getUsernameQuery = `SELECT * FROM users WHERE username=${db.escape(username)}`
         let isUsernameExist = await query(getUsernameQuery)
@@ -15,8 +15,9 @@ module.exports = {
 
         const salt = await bcrypt.genSalt(10)
         const hashPassword = await bcrypt.hash(password, salt)
-        let addUserQuery = `INSERT INTO users VALUES (null, ${db.escape(username)}, ${db.escape(email)}, ${db.escape(hashPassword)}, ${db.escape(phone_number)}, ${db.escape(store_name)}, false)`
-        let addUserResult = await query(addUserQuery)
+        const sql = 'INSERT INTO users (username, email, password, phone_number) VALUES (?, ?, ?, ?)';
+        const values = [username, email, hashPassword, phone_number];
+        let addUserResult = await query(sql, values)
         return response.status(200).send({data: addUserResult, message: "Register success"})
 
     },
@@ -38,7 +39,7 @@ module.exports = {
             let payload = { id: isUsernameExist[0].id_users, isVerified: isUsernameExist[0].isVerified }
             const token = jwt.sign(payload, 'amel', { expiresIn: '1h' })
 
-            return res.status(200).send({ token, message: "Login success"})
+            return res.status(200).send({ token, message: "Login berhasil"})
 
 
         } catch (error) {
