@@ -5,7 +5,7 @@ const MyNavbar = () => {
   return (
     <Navbar bg="light" expand="lg" style={{ padding: "8px" }}>
       <Navbar.Brand href="/" className="mx-3">
-        <strong>Emmerce-9</strong>
+        <strong>9-merce</strong>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
