@@ -1,5 +1,6 @@
 import React from "react";
 import { Navbar, Nav, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const MyNavbar = () => {
   return (
@@ -10,12 +11,16 @@ const MyNavbar = () => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
         <Nav className="ml-auto">
-          <Button variant="primary" className="mx-2">
-            Login
-          </Button>
-          <Button variant="outline-primary" className="mx-2">
-            Register
-          </Button>
+          <Link to="/login">
+            <Button variant="primary" className="mx-2">
+              Login
+            </Button>
+          </Link>
+          <Link to="/register">
+            <Button variant="outline-primary" className="mx-2">
+              Register
+            </Button>
+          </Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
