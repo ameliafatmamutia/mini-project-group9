@@ -8,12 +8,19 @@ const Home = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [searchName, setSearchName] = useState("");
   const [searchCategory, setSearchCategory] = useState("");
+  const [sortOption, setSortOption] = useState("");
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await Axios.get(
-          `http://localhost:8000/products?page=${currentPage}&name=${searchName}&category=${searchCategory}`
+          `http://localhost:8000/products?page=${currentPage}&name=${searchName}&category=${searchCategory}${
+            sortOption
+              ? `&sortBy=${sortOption.split("-")[0]}&sortOrder=${
+                  sortOption.split("-")[1]
+                }`
+              : ""
+          }`
         );
         setProducts(response.data.data);
         setTotalPages(response.data.totalPages);
@@ -22,7 +29,7 @@ const Home = () => {
       }
     };
     fetchProducts();
-  }, [currentPage, searchName, searchCategory]);
+  }, [currentPage, searchName, searchCategory, sortOption]);
 
   const handlePrevPage = () => {
     if (currentPage > 1) {
@@ -81,12 +88,16 @@ const Home = () => {
             </div>
             <div className="card-body">
               <label htmlFor="searchCategory">Sort by</label>
-              <select name="searchCategory" className="form-control">
+              <select
+                name="searchCategory"
+                className="form-control"
+                onChange={(e) => setSortOption(e.target.value)}
+              >
                 <option value="">Default</option>
-                <option value="">Lowest Price</option>
-                <option value="">Highest Price</option>
-                <option value="">A-Z</option>
-                <option value="">Z-A</option>
+                <option value="price-asc">Lowest Price</option>
+                <option value="price-desc">Highest Price</option>
+                <option value="name-asc">A-Z</option>
+                <option value="name-desc">Z-A</option>
               </select>
             </div>
           </div>

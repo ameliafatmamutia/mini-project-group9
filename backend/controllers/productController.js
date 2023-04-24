@@ -17,9 +17,21 @@ module.exports = {
       values.push(category);
     }
     if (sortBy) {
-      sql += ` ORDER BY ${sortBy}`;
+      switch (sortBy) {
+        case "price":
+          sql += " ORDER BY Price";
+          break;
+        case "name":
+          sql += " ORDER BY Product_Name";
+          break;
+        default:
+          sql += " ORDER BY Id_Product";
+          break;
+      }
       if (sortOrder === "desc") {
         sql += " DESC";
+      } else {
+        sql += " ASC";
       }
     }
 
