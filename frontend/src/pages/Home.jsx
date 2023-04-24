@@ -6,12 +6,14 @@ const Home = () => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [searchName, setSearchName] = useState("");
+  const [searchCategory, setSearchCategory] = useState("");
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await Axios.get(
-          `http://localhost:8000/products?page=${currentPage}`
+          `http://localhost:8000/products?page=${currentPage}&name=${searchName}&category=${searchCategory}`
         );
         setProducts(response.data.data);
         setTotalPages(response.data.totalPages);
@@ -20,7 +22,7 @@ const Home = () => {
       }
     };
     fetchProducts();
-  }, [currentPage]);
+  }, [currentPage, searchName, searchCategory]);
 
   const handlePrevPage = () => {
     if (currentPage > 1) {
@@ -49,20 +51,27 @@ const Home = () => {
               <strong>Filter Products</strong>
             </div>
             <div className="card-body">
-              <label htmlFor="searchProductName">Product Name</label>
+              <label htmlFor="searchName">Product Name</label>
               <input
-                name="searchProductName"
+                name="searchName"
                 type="text"
                 className="form-control mb-3"
+                value={searchName}
+                onChange={(e) => setSearchName(e.target.value)}
               />
               <label htmlFor="searchCategory">Product Category</label>
-              <select name="searchCategory" className="form-control">
+              <select
+                name="searchCategory"
+                className="form-control"
+                value={searchCategory}
+                onChange={(e) => setSearchCategory(e.target.value)}
+              >
                 <option value="">All Items</option>
-                <option value="">Fashion</option>
-                <option value="">Electronics</option>
-                <option value="">Household Appliances</option>
-                <option value="">Beauty</option>
-                <option value="">Foods</option>
+                <option value="1">Fashion</option>
+                <option value="2">Electronics</option>
+                <option value="3">Household Appliances</option>
+                <option value="4">Beauty</option>
+                <option value="5">Foods</option>
               </select>
             </div>
           </div>
