@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Form, Button } from "react-bootstrap";
 import "../../assets/styles/LoginPage.css";
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
+import AuthContext from "../../components/AuthContext";
 
 const Login = () => {
+  const { setLoggedIn, setUsername } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -12,14 +14,7 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
+  const handleLogin = async () => {
     try {
       const response = await Axios.post(
         "http://localhost:8000/auth/login",
@@ -27,6 +22,9 @@ const Login = () => {
       );
       if (response.status === 200) {
         alert("Login success");
+        // Update loggedIn state and username in MyNavbar
+        setLoggedIn(true);
+        setUsername(formData.username);
         navigate("/");
       } else {
         alert("Login failed. Username or password is invalid");
@@ -35,6 +33,16 @@ const Login = () => {
       console.error("Error logging in:", error);
       alert("Login failed");
     }
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    handleLogin();
   };
 
   return (
