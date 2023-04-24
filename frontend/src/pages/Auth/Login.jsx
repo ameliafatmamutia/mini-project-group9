@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import AuthContext from "../../components/AuthContext";
 
 const Login = () => {
-  const { setLoggedIn, setUsername } = useContext(AuthContext);
+  const { setLoggedIn, setUsername, setToken } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -25,6 +25,10 @@ const Login = () => {
         // Update loggedIn state and username in MyNavbar
         setLoggedIn(true);
         setUsername(formData.username);
+        const token = response.data.token;
+        localStorage.setItem("token", token);
+        localStorage.setItem("username", formData.username);
+        setToken(token);
         navigate("/");
       } else {
         alert("Login failed. Username or password is invalid");

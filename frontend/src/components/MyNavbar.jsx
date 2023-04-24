@@ -1,10 +1,20 @@
 import React, { useContext } from "react";
 import { Navbar, Nav, Button, Dropdown } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "./AuthContext";
 
 const MyNavbar = () => {
-  const { loggedIn, username } = useContext(AuthContext);
+  const { loggedIn, username, setLoggedIn, setUsername } =
+    useContext(AuthContext);
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    setUsername("");
+    setLoggedIn(false);
+    localStorage.removeItem("token");
+    navigate("/");
+  };
 
   return (
     <Navbar bg="light" expand="lg" style={{ padding: "8px" }}>
@@ -20,7 +30,7 @@ const MyNavbar = () => {
                 {username}
               </Dropdown.Toggle>
               <Dropdown.Menu>
-                <Dropdown.Item>Logout</Dropdown.Item>
+                <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </Nav>
