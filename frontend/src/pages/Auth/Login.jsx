@@ -28,6 +28,7 @@ const Login = () => {
         const token = response.data.token;
         localStorage.setItem("token", token);
         localStorage.setItem("username", formData.username);
+        localStorage.setItem("store_name", response.data.store_name);
         setToken(token);
         navigate("/");
       } else {

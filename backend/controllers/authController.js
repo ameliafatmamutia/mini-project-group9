@@ -49,11 +49,14 @@ module.exports = {
 
       let payload = {
         id: isUsernameExist[0].id_users,
-        isVerified: isUsernameExist[0].isVerified,
       };
       const token = jwt.sign(payload, "amel", { expiresIn: "1h" });
-
-      return res.status(200).send({ token, message: "Login berhasil" });
+      return res.status(200).send({
+        token,
+        message: "Login berhasil",
+        username: `${isUsernameExist[0].username}`,
+        store_name: `${isUsernameExist[0].store_name}`,
+      });
     } catch (error) {
       res.status(400).send(error);
     }

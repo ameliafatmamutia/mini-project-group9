@@ -26,6 +26,7 @@ const RegisterStore = () => {
       );
       console.log(response);
       alert("Store name is successfully registered");
+      localStorage.setItem("store_name", formData.store_name);
       navigate("/my-store");
     } catch (error) {
       console.error("Error registering:", error);

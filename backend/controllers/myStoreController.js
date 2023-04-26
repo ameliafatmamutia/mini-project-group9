@@ -46,7 +46,5 @@ module.exports = {
         res.status(500).send({ message: "Internal server error" });
       }
     }
-
-    return res.status(400).send({ message: "Username has been used" });
   },
 };

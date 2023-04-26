@@ -14,6 +14,7 @@ const MyNavbar = () => {
     setUsername("");
     setLoggedIn(false);
     localStorage.removeItem("token");
+    localStorage.clear();
     navigate("/");
   };
 
@@ -31,13 +32,11 @@ const MyNavbar = () => {
                 {username}
               </Dropdown.Toggle>
               <Dropdown.Menu align="end">
-                <DropdownItem>
-                  <Link
-                    to="/my-store"
-                    style={{ textDecoration: "none", color: "inherit" }}
-                  >
-                    My Store
-                  </Link>
+                <DropdownItem
+                  onClick={() => navigate("/my-store")}
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  My Store
                 </DropdownItem>
                 <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
               </Dropdown.Menu>
