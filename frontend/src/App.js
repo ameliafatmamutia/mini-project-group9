@@ -7,6 +7,8 @@ import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import MyNavbar from "./components/MyNavbar";
 import AuthContext from "./components/AuthContext";
+import MyStore from "./pages/MyStore";
+import RegisterStore from "./pages/RegisterStore";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -25,6 +27,7 @@ function App() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.clear();
     setLoggedIn(false);
     setUsername("");
   };
@@ -39,6 +42,8 @@ function App() {
           <Route Component={Login} path="/login" />
           <Route Component={Register} path="/register" />
           <Route Component={Home} path="/" />
+          <Route Component={MyStore} path="/my-store" />
+          <Route Component={RegisterStore} path="/my-store/register" />
         </Routes>
       </BrowserRouter>
     </AuthContext.Provider>

@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Navbar, Nav, Button, Dropdown } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "./AuthContext";
+import DropdownItem from "react-bootstrap/esm/DropdownItem";
 
 const MyNavbar = () => {
   const { loggedIn, username, setLoggedIn, setUsername } =
@@ -29,7 +30,15 @@ const MyNavbar = () => {
               <Dropdown.Toggle variant="outline-primary" id="dropdown-basic">
                 {username}
               </Dropdown.Toggle>
-              <Dropdown.Menu>
+              <Dropdown.Menu align="end">
+                <DropdownItem>
+                  <Link
+                    to="/my-store"
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    My Store
+                  </Link>
+                </DropdownItem>
                 <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>

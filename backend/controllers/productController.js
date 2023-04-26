@@ -43,8 +43,6 @@ module.exports = {
       values.push(offset, Number(pageLimit));
     }
 
-    console.log(item.length, pageLimit, Math.ceil(item.length / pageLimit));
-
     const totalPages = Math.ceil(item.length / pageLimit);
 
     await query(sql, values, (err, result) => {
