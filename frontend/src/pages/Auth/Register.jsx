@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import "../../assets/styles/RegisterPage.css";
 import Axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -23,6 +26,7 @@ const Register = () => {
       const response = await Axios.post("http://localhost:8000/auth", formData);
       console.log(response.data);
       alert("Register success");
+      navigate("/login");
     } catch (error) {
       console.error("Error registering:", error);
       alert("Register fail. Username has been used");
