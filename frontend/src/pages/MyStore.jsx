@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 const MyStore = () => {
   const navigate = useNavigate();
   const storeName = localStorage.getItem("store_name");
-  console.log(storeName);
 
   return (
     <div>
@@ -18,12 +17,25 @@ const MyStore = () => {
         </div>
       ) : (
         <div style={{ textAlign: "center", padding: "20px" }}>
+          <div>
+            <h4>Store Name: {storeName}</h4>
+          </div>
           <Row>
             <Col>
-              <Button size="lg">My Product</Button>
+              <Button
+                size="lg"
+                onClick={() => navigate("/my-store/my-product")}
+              >
+                My Product
+              </Button>
             </Col>
             <Col>
-              <Button size="lg">Sales Analytics</Button>
+              <Button
+                size="lg"
+                onClick={() => navigate("/my-store/sales-analytics")}
+              >
+                Sales Analytics
+              </Button>
             </Col>
           </Row>
         </div>
