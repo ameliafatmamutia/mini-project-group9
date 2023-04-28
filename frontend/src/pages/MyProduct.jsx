@@ -23,15 +23,6 @@ const MyProduct = () => {
 
   const [editId, setEditId] = useState(0);
 
-  // const defaultValueEditForm = {
-  //   editProductName: "",
-  //   editDescription: "",
-  //   editPrice: 0,
-  //   editCategory: 0,
-  //   editStock: 0,
-  //   editProductImage: "",
-  // };
-
   const [editForm, setEditForm] = useState({
     editProductName: "",
     editDescription: "",
@@ -126,6 +117,32 @@ const MyProduct = () => {
     }
   };
 
+  const deactivateButtonHandler = async (Id_Product) => {
+    try {
+      const response = await Axios.patch(
+        `http://localhost:8000/my-store/my-product/deactivate/${Id_Product}`
+      );
+      console.log(response);
+      alert(`Product with ID ${Id_Product} is successfully deactivated`);
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Server Error");
+    }
+  };
+
+  const activateButtonHandler = async (Id_Product) => {
+    try {
+      const response = await Axios.patch(
+        `http://localhost:8000/my-store/my-product/activate/${Id_Product}`
+      );
+      console.log(response);
+      alert(`Product with ID ${Id_Product} is successfully activated`);
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Server Error");
+    }
+  };
+
   const renderProducts = () => {
     return products.map((product) => {
       if (product.Id_Product === editId) {
@@ -212,7 +229,11 @@ const MyProduct = () => {
           <td>{product.Product_Name}</td>
           <td>{product.Price}</td>
           <td>
-            <img src={product.Img} alt="" style={{ height: "250px" }} />
+            <img
+              src={product.Img}
+              alt=""
+              style={{ height: "250px", width: "250px" }}
+            />
           </td>
           <td>{product.Description}</td>
           <td>{product.Stock}</td>
@@ -227,7 +248,21 @@ const MyProduct = () => {
             </button>
           </td>
           <td>
-            <button className="btn btn-secondary">Deactivate</button>
+            {product.Is_Active === 1 ? (
+              <button
+                onClick={() => deactivateButtonHandler(product.Id_Product)}
+                className="btn btn-secondary"
+              >
+                Deactivate
+              </button>
+            ) : (
+              <button
+                onClick={() => activateButtonHandler(product.Id_Product)}
+                className="btn btn-success"
+              >
+                Activate
+              </button>
+            )}
           </td>
           <td>
             <button className="btn btn-danger">Delete</button>

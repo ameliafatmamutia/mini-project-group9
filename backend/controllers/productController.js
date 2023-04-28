@@ -5,14 +5,14 @@ module.exports = {
     const { name, category, sortBy, sortOrder, page, limit } = req.query;
     const pageLimit = limit || 9;
 
-    let sql = "SELECT * FROM products";
+    let sql = "SELECT * FROM products WHERE Is_Active = 1";
     const values = [];
     if (name) {
-      sql += " WHERE Product_Name LIKE ?";
+      sql += " AND Product_Name LIKE ?";
       values.push(`%${name}%`);
     }
     if (category) {
-      sql += name ? " AND" : " WHERE";
+      sql += name ? " AND" : " AND";
       sql += " Id_Category = ?";
       values.push(category);
     }

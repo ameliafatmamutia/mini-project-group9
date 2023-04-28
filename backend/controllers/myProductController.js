@@ -76,4 +76,44 @@ module.exports = {
       res.status(500).send({ message: "Internal server error" });
     }
   },
+  // bikin controller untuk deactivate product by Id_Product
+  deactivateProduct: async (req, res) => {
+    const { Id_Product } = req.params;
+    const sqlQuery = `UPDATE products SET Is_Active = 0 WHERE Id_Product = ${db.escape(
+      Id_Product
+    )};`;
+
+    try {
+      const result = await query(sqlQuery);
+      if (result.affectedRows === 0) {
+        res.status(200).send({ message: "Fail to deactivate" });
+      } else {
+        res.status(200).send({
+          message: `Product data of id: ${Id_Product} is successfully deactivated`,
+        });
+      }
+    } catch (err) {
+      res.status(500).send({ message: "Internal server error" });
+    }
+  },
+  // bikin controller untuk activate product by Id_Product
+  activateProduct: async (req, res) => {
+    const { Id_Product } = req.params;
+    const sqlQuery = `UPDATE products SET Is_Active = 1 WHERE Id_Product = ${db.escape(
+      Id_Product
+    )};`;
+
+    try {
+      const result = await query(sqlQuery);
+      if (result.affectedRows === 0) {
+        res.status(200).send({ message: "Fail to activate" });
+      } else {
+        res.status(200).send({
+          message: `Product data of id: ${Id_Product} is successfully activated`,
+        });
+      }
+    } catch (err) {
+      res.status(500).send({ message: "Internal server error" });
+    }
+  },
 };
