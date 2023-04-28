@@ -21,6 +21,26 @@ const MyProduct = () => {
 
   const [formData, setFormData] = useState(initialState);
 
+  const [editId, setEditId] = useState(0);
+
+  // const defaultValueEditForm = {
+  //   editProductName: "",
+  //   editDescription: "",
+  //   editPrice: 0,
+  //   editCategory: 0,
+  //   editStock: 0,
+  //   editProductImage: "",
+  // };
+
+  const [editForm, setEditForm] = useState({
+    editProductName: "",
+    editDescription: "",
+    editPrice: 0,
+    editCategory: 0,
+    editStock: 0,
+    editProductImage: "",
+  });
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
@@ -29,6 +49,11 @@ const MyProduct = () => {
   const handleCategoryChange = (event) => {
     const categoryId = parseInt(event.target.value);
     setFormData({ ...formData, Id_Category: categoryId });
+  };
+
+  const inputHandler = (event) => {
+    const { name, value } = event.target;
+    setEditForm({ ...editForm, [name]: value });
   };
 
   useEffect(() => {
@@ -63,8 +88,124 @@ const MyProduct = () => {
     }
   };
 
+  const editToggle = (editData) => {
+    setEditId(editData.Id_Product);
+    setEditForm({
+      editProductName: editData.Product_Name,
+      editDescription: editData.Description,
+      editPrice: editData.Price,
+      editCategory: editData.Id_Category,
+      editStock: editData.Stock,
+      editProductImage: editData.Img,
+    });
+  };
+
+  const cancelEdit = () => {
+    setEditId(0);
+  };
+
+  const saveButtonHandler = async () => {
+    try {
+      const response = await Axios.patch(
+        `http://localhost:8000/my-store/my-product/update/${editId}`,
+        {
+          Product_Name: editForm.editProductName,
+          Description: editForm.editDescription,
+          Price: editForm.editPrice,
+          Id_Category: editForm.editCategory,
+          Stock: editForm.editStock,
+          Img: editForm.editProductImage,
+        }
+      );
+      console.log(response);
+      alert("Edit data success");
+      cancelEdit();
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Server Error");
+    }
+  };
+
   const renderProducts = () => {
     return products.map((product) => {
+      if (product.Id_Product === editId) {
+        return (
+          <tr>
+            <td>{product.Id_Product}</td>
+            <td>
+              <input
+                value={editForm.editProductName}
+                onChange={inputHandler}
+                type="text"
+                className="form-control"
+                name="editProductName"
+              />
+            </td>
+            <td>
+              <input
+                value={editForm.editPrice}
+                onChange={inputHandler}
+                type="number"
+                className="form-control"
+                name="editPrice"
+              />
+            </td>
+            <td>
+              <input
+                value={editForm.editProductImage}
+                onChange={inputHandler}
+                type="text"
+                className="form-control"
+                name="editProductImage"
+              />
+            </td>
+            <td>
+              <input
+                value={editForm.editDescription}
+                onChange={inputHandler}
+                type="text"
+                className="form-control"
+                name="editDescription"
+              />
+            </td>
+            <td>
+              <input
+                value={editForm.editStock}
+                onChange={inputHandler}
+                type="number"
+                className="form-control"
+                name="editStock"
+              />
+            </td>
+            <td>
+              <select
+                value={editForm.editCategory}
+                onChange={inputHandler}
+                name="editCategory"
+                className="editCategory"
+              >
+                <option value="0">Select Category</option>
+                <option value="1">Fashion</option>
+                <option value="2">Electronics</option>
+                <option value="3">Household Appliances</option>
+                <option value="4">Beauty</option>
+                <option value="5">Foods</option>
+              </select>
+            </td>
+            <td>{product.Is_Active === 1 ? "Active" : "Not Active"}</td>
+            <td>
+              <button className="btn btn-primary" onClick={saveButtonHandler}>
+                Save
+              </button>
+            </td>
+            <td>
+              <button className="btn btn-danger" onClick={cancelEdit}>
+                Cancel
+              </button>
+            </td>
+          </tr>
+        );
+      }
       return (
         <tr>
           <td>{product.Id_Product}</td>
@@ -78,7 +219,15 @@ const MyProduct = () => {
           <td>{product.Category_Name}</td>
           <td>{product.Is_Active === 1 ? "Active" : "Not Active"}</td>
           <td>
-            <button className="btn btn-secondary">Edit</button>
+            <button
+              className="btn btn-primary"
+              onClick={() => editToggle(product)}
+            >
+              Edit
+            </button>
+          </td>
+          <td>
+            <button className="btn btn-secondary">Deactivate</button>
           </td>
           <td>
             <button className="btn btn-danger">Delete</button>
@@ -126,7 +275,7 @@ const MyProduct = () => {
                     <th>Stock</th>
                     <th>Category</th>
                     <th>Status</th>
-                    <th colSpan="2">Action</th>
+                    <th colSpan="3">Action</th>
                   </tr>
                 </thead>
                 <tbody>

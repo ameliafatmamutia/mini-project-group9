@@ -50,4 +50,30 @@ module.exports = {
       res.status(500).send({ message: "Server error" });
     }
   },
+  // bikin controller untuk edit product by Id_Product
+  updateProductById: async (req, res) => {
+    const { editId } = req.params;
+    const { Product_Name, Description, Price, Id_Category, Stock, Img } =
+      req.body;
+    const sqlQuery = `UPDATE products SET Product_Name = ${db.escape(
+      Product_Name
+    )}, Description = ${db.escape(Description)}, Price = ${db.escape(
+      Price
+    )}, Id_Category = ${db.escape(Id_Category)}, Stock = ${db.escape(
+      Stock
+    )}, Img = ${db.escape(Img)} WHERE Id_Product = ${db.escape(editId)};`;
+
+    try {
+      const result = await query(sqlQuery);
+      if (result.affectedRows === 0) {
+        res.status(200).send({ message: "No data is changed" });
+      } else {
+        res.status(200).send({
+          message: `Product data of id: ${editId} is updated successfully`,
+        });
+      }
+    } catch (err) {
+      res.status(500).send({ message: "Internal server error" });
+    }
+  },
 };
