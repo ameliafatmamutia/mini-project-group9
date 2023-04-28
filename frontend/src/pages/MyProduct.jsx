@@ -143,6 +143,24 @@ const MyProduct = () => {
     }
   };
 
+  const deleteButtonHandler = async (Id_Product) => {
+    const confirmDelete = window.confirm(
+      "Are you sure want to delete this product?"
+    );
+    if (confirmDelete) {
+      try {
+        const response = await Axios.delete(
+          `http://localhost:8000/my-store/my-product/delete/${Id_Product}`
+        );
+        console.log(response);
+        alert(`Product with ID ${Id_Product} is successfully deleted`);
+      } catch (error) {
+        console.error("Error:", error);
+        alert("Server Error");
+      }
+    }
+  };
+
   const renderProducts = () => {
     return products.map((product) => {
       if (product.Id_Product === editId) {
@@ -265,7 +283,12 @@ const MyProduct = () => {
             )}
           </td>
           <td>
-            <button className="btn btn-danger">Delete</button>
+            <button
+              onClick={() => deleteButtonHandler(product.Id_Product)}
+              className="btn btn-danger"
+            >
+              Delete
+            </button>
           </td>
         </tr>
       );

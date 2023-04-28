@@ -116,4 +116,24 @@ module.exports = {
       res.status(500).send({ message: "Internal server error" });
     }
   },
+  // bikin controller untuk delete product by Id_Product
+  deleteProduct: async (req, res) => {
+    const { Id_Product } = req.params;
+    const sqlQuery = `DELETE FROM products WHERE Id_Product = ${db.escape(
+      Id_Product
+    )};`;
+
+    try {
+      const result = await query(sqlQuery);
+      if (result.affectedRows === 0) {
+        res.status(200).send({ message: "Fail to delete" });
+      } else {
+        res.status(200).send({
+          message: `Product data of id: ${Id_Product} is successfully deleted`,
+        });
+      }
+    } catch (err) {
+      res.status(500).send({ message: "Internal server error" });
+    }
+  },
 };
