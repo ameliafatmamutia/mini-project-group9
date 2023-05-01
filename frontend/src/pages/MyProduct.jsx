@@ -429,6 +429,13 @@ const MyProduct = () => {
                   </Form.Control>
                 </Form.Group>
                 <br />
+                <Button
+                  variant="success"
+                  onClick={() => navigate("/my-store/my-product/new-category")}
+                >
+                  Add New Category
+                </Button>
+                <br />
                 <br />
                 <Button
                   variant="primary"
