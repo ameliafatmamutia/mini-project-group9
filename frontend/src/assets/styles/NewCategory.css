@@ -1,0 +1,6 @@
+.Box {
+    width: 15vw;
+    height: auto;
+    display: flex;
+    justify-content: space-around;
+}

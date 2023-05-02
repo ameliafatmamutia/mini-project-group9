@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import Axios from "axios";
 import { Button, Form } from "react-bootstrap";
+import "../assets/styles/NewCategory.css"
+import { useNavigate } from "react-router-dom";
 
 const NewCategory = () => {
+  const navigate = useNavigate()
   const [category, setCategory] = useState("");
 
   const handleSubmit = async (e) => {
@@ -42,9 +45,14 @@ const NewCategory = () => {
         </Form.Group>
         <br />
         <br />
-        <Button variant="primary" type="submit">
-          Add New Category
-        </Button>
+        <div className="Box">
+          <Button variant="danger" onClick={() => navigate("/my-store/my-product")}>
+            Cancel
+          </Button>
+          <Button variant="primary" type="submit">
+            Add New Category
+          </Button>
+        </div>
       </Form>
     </div>
   );

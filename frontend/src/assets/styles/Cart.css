@@ -1,0 +1,17 @@
+.Cart{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+table {
+    width: 50vw;
+    height: auto;
+    text-align: center;
+    font-size: larger;
+}
+
+.Bold {
+    font-weight: bold;
+}

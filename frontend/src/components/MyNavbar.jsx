@@ -27,6 +27,11 @@ const MyNavbar = () => {
       <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
         {loggedIn ? (
           <Nav className="ml-auto">
+            <Link to ="/cart">
+              <Button variant="primary" className="mx-2">
+                Cart
+              </Button>
+            </Link>
             <Dropdown>
               <Dropdown.Toggle variant="outline-primary" id="dropdown-basic">
                 {username}
