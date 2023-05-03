@@ -1,33 +1,41 @@
 import React, { useState } from 'react';
 import '../assets/styles/Cart.css';
+import { clearCart, removeItem } from '../redux/slice';
+import { connect } from 'react-redux';
+import { Button } from 'react-bootstrap';
 
-const mockItems = [
-    { id: 1, name: 'Product A', price: 100000, quantity: 2 },
-    { id: 2, name: 'Product B', price: 250000, quantity: 1 },
-    { id: 3, name: 'Product C', price: 50000, quantity: 3 }
-];
+const Cart = (props) => {
+  const data = props.items.items;
 
-const Cart = () => {
+  const [cart, setCart] = useState(data.map(item => ({...item, Quantity: 1})));
 
-  const [items, setItems] = useState(mockItems);
-
-  const addItem = (item) => {
-    setItems((prevItems) => [...prevItems, item]);
+  const handleDecrement = (index) => {
+    const newCart = [...cart];
+    if (newCart[index].Quantity > 1) {
+      newCart[index].Quantity -= 1;
+      setCart(newCart);
+    }
   };
 
-  const totalAmount = items.reduce((total, item) => total + item.price * item.quantity, 0);
+  const handleIncrement = (index) => {
+    const newCart = [...cart];
+    newCart[index].Quantity += 1;
+    setCart(newCart);
+  };
+
+  const totalAmount = cart.reduce((total, item) => total + (item.Price * item.Quantity), 0);
 
   return (
     <div className='Cart'>
       <h2>Cart</h2>
       <br />
-      {items.length === 0 ? (
+      {cart.length === 0 ? (
         <p>No items in cart.</p>
       ) : (
         <table>
           <thead>
             <tr>
-              <th>ID</th>
+              <th>Image</th>
               <th>Product</th>
               <th>Price (IDR)</th>
               <th>Quantity</th>
@@ -35,13 +43,29 @@ const Cart = () => {
             </tr>
           </thead>
           <tbody>
-            {items.map((item, index) => (
+            {cart.map((item, index) => (
               <tr key={index}>
-                <td>{item.id}</td>
-                <td>{item.name}</td>
-                <td>{item.price.toLocaleString('id-ID')}</td>
-                <td>{item.quantity}</td>
-                <td>{(item.price * item.quantity).toLocaleString('id-ID')}</td>
+                <td className='tableImage'>
+                    <img src={item.Img} alt="" />
+                </td>
+                <td className='product'>{item.Product_Name}</td>
+                <td>{item.Price.toLocaleString('id-ID')}</td>
+                <td className='quantity'>
+                <Button className='qButton' onClick={() => {
+                  if (item.Quantity > 1) {
+                    setCart(prevCart => {
+                      const newCart = [...prevCart];
+                      newCart[index].Quantity -= 1;
+                      return newCart;
+                    });
+                  } else {
+                    setCart(prevCart => prevCart.filter((cartItem, i) => i !== index));
+                  }
+                }}>-</Button>
+                  <p>{item.Quantity}</p>
+                  <Button className='qButton' onClick={() => handleIncrement(index)}>+</Button>
+                </td>
+                <td>{(item.Price * item.Quantity).toLocaleString('id-ID')}</td>
               </tr>
             ))}
           </tbody>
@@ -54,8 +78,24 @@ const Cart = () => {
           </tfoot>
         </table>
       )}
+      <Button variant='success' onClick={() => console.log(cart)}>
+        click me
+      </Button>
     </div>
   );
 };
 
-export default Cart;
+const mapStateToProps = state => {
+  return {
+    items: state.cart
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    removeItem: () => dispatch(removeItem()),
+    clearCart: () => dispatch(clearCart())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);

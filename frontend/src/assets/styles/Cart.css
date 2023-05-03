@@ -5,6 +5,10 @@
     align-items: center;
 }
 
+.product{
+    width: 20vw;
+}
+
 table {
     width: 50vw;
     height: auto;
@@ -14,4 +18,15 @@ table {
 
 .Bold {
     font-weight: bold;
+}
+
+.quantity{
+    display: flex;
+    justify-content: space-evenly;
+    width: 16vw;
+}
+
+img{
+    height: 8vh;
+    width: 8vw;
 }
