@@ -1,0 +1,32 @@
+.Cart{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.product{
+    width: 20vw;
+}
+
+table {
+    width: 50vw;
+    height: auto;
+    text-align: center;
+    font-size: larger;
+}
+
+.Bold {
+    font-weight: bold;
+}
+
+.quantity{
+    display: flex;
+    justify-content: space-evenly;
+    width: 16vw;
+}
+
+img{
+    height: 8vh;
+    width: 8vw;
+}

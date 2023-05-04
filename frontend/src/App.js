@@ -11,6 +11,8 @@ import MyStore from "./pages/MyStore";
 import RegisterStore from "./pages/RegisterStore";
 import MyProduct from "./pages/MyProduct";
 import SalesAnalytics from "./pages/SalesAnalytics";
+import NewCategory from "./pages/NewCategory"
+import Cart from "./pages/Cart";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -48,6 +50,8 @@ function App() {
           <Route Component={RegisterStore} path="/my-store/register" />
           <Route Component={MyProduct} path="/my-store/my-product" />
           <Route Component={SalesAnalytics} path="/my-store/sales-analytics" />
+          <Route Component={NewCategory} path="/my-store/my-product/new-category" />
+          <Route Component={Cart} path="/cart" />
         </Routes>
       </BrowserRouter>
     </AuthContext.Provider>
